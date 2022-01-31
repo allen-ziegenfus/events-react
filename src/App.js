@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+
+import useEvents from "./hooks/useEvents";
 
 function App() {
+  const start = 0;
+  const end = 5;
+  const type = 1;
+  const { data, isFetching, status } = useEvents(start, end, type, "en-US");
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {status === "success" &&
+        data &&
+        data.map((event) => (
+          <div key={event.marketingEventId}>{event.titleCurrentValue}: {event.titleURL}</div>
+        ))}
     </div>
   );
 }
